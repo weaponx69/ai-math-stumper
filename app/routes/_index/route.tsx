@@ -11,7 +11,7 @@ export const loader = ({ request }: LoaderFunctionArgs) => {
 export default function HomePage() {
     return (
         <div className={styles.root}>
-            <div className={styles.title}>I'M A TITLE</div>
+            <div className={styles.title}>AI Math Stumper</div>
             <div className={styles.paragraph}>
                 <div className={styles.text}>
                     I’m a paragraph. Add your own text and edit me on properties panel on the right.

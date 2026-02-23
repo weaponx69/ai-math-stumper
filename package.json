@@ -21,7 +21,34 @@
     "isbot": "^5.1.22",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.28.0",
+    "@nivo/bump": "^0.88.0",
+    "@nivo/boxplot": "^0.88.0",
+    "@nivo/bar": "^0.88.0",
+    "@nivo/bullet": "^0.88.0",
+    "@nivo/calendar": "^0.88.0",
+    "@nivo/chord": "^0.88.0",
+    "@nivo/circle-packing": "^0.88.0",
+    "@nivo/funnel": "^0.88.0",
+    "@nivo/heatmap": "^0.88.0",
+    "@nivo/line": "^0.88.0",
+    "@nivo/marimekko": "^0.88.0",
+    "@nivo/network": "^0.88.0",
+    "@nivo/parallel-coordinates": "^0.88.0",
+    "@nivo/pie": "^0.88.0",
+    "@nivo/radar": "^0.88.0",
+    "@nivo/radial-bar": "^0.88.0",
+    "@nivo/sankey": "^0.88.0",
+    "@nivo/scatterplot": "^0.88.0",
+    "@nivo/stream": "^0.88.0",
+    "@nivo/sunburst": "^0.88.0",
+    "@nivo/swarmplot": "^0.88.0",
+    "@nivo/treemap": "^0.88.0",
+    "@nivo/voronoi": "^0.88.0",
+    "@nivo/waffle": "^0.88.0",
+    "@nivo/geo": "^0.88.0",
+    "react-bootstrap": "^2.10.7",
+    "bootstrap": "^5.3.3"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.15.2",
@@ -42,7 +69,9 @@
     "typescript": "^5.7.3",
     "vite": "^5.4.11",
     "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "@codux-boards/react-nivo": "1.0.5",
+    "@codux-boards/react-bootstrap": "1.0.1"
   },
   "engines": {
     "node": ">=18.0.0"
