@@ -19,16 +19,7 @@ export const Footer = ({ className }: FooterProps) => {
     return (
         <div className={classNames(styles.root, className)}>
             <div className={styles.details}>
-                <div>Contact Jane Doe</div>
-                <div className={styles.small}>
-                    Mail: info@mysite.com
-                    <br />
-                    Tel: 123-456-7890
-                    <br />
-                    500 Terry Francine Street,
-                    <br />
-                    San Francisco, CA 94158
-                </div>
+                <div></div>
             </div>
             <div className={styles.social}>
                 <a href="/">

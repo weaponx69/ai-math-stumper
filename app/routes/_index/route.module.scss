@@ -4,3 +4,188 @@
     gap: 20px;
     justify-items: start;
 }
+
+.input {
+    width: 100%;
+    height: 50px;
+    padding: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.initialConditions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.conditionGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.conditionLabel {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.targetTime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin: 20px 0;
+}
+
+.targetLabel {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.solution {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.solutionTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.solutionValues {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.solutionItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.solutionLabel {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.solutionValue {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.metrics {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.metricItem {
+    font-size: 1.1rem;
+    margin: 8px 0;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.latexSolution {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    text-align: left;
+    overflow-x: auto;
+}
+
+.latexContent {
+    font-family: 'Times New Roman', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    white-space: pre-wrap;
+}
+
+.explanation {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.explanationContent {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+}
+
+.explanationContent p {
+    margin-bottom: 12px;
+}
+
+.step {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.step:last-child {
+    border-bottom: none;
+}
+
+.stepTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 12px;
+}
+
+.stepProse {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.mathBlock {
+    margin: 15px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    overflow-x: auto;
+}
