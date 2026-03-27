@@ -5,7 +5,8 @@ import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node
 import commonStyles from '~/styles/common-styles.module.scss';
 import { getUrlOriginWithPath } from '~/utils';
 import { odeApi, ODETask, SolutionDetails } from '~/services/api';
-import { InlineMath, BlockMath } from 'react-katex';
+import reactKatexPkg from 'react-katex';
+const { InlineMath, BlockMath } = (reactKatexPkg as any) || {};
 import classes from './route.module.scss';
 
 // Parse the LaTeX solution into steps
