@@ -6,7 +6,7 @@ import commonStyles from '~/styles/common-styles.module.scss';
 import { getUrlOriginWithPath } from '~/utils';
 import { odeApi, ODETask, SolutionDetails } from '~/services/api';
 import reactKatexPkg from 'react-katex';
-const { InlineMath, BlockMath } = (reactKatexPkg as any) || {};
+const { InlineMath, BlockMath } = reactKatexPkg;
 import classes from './route.module.scss';
 
 // Parse the LaTeX solution into steps
@@ -195,49 +195,45 @@ export default function HomePage() {
             {/* Input Containers */}
             <div className={classes.inputsContainer}>
                 {/* Initial Conditions */}
-                <div className={classes.initialConditions}>
-                    <div className={classes.conditionsTitle}>Initial Conditions</div>
+                <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', padding: '20px', borderRadius: '10px', border: '1px solid #e0e0e0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#333', marginBottom: '16px', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Initial Conditions</div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                        <div className={classes.conditionGroup}>
-                            <label className={classes.conditionLabel}>x₀</label>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>x₀</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                className={classes.input}
-                                style={{ width: '100%', height: '44px' }}
+                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
                                 value={initialConditions.x0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, x0: parseFloat(e.target.value) || 0 })}
                             />
                         </div>
-                        <div className={classes.conditionGroup}>
-                            <label className={classes.conditionLabel}>y₀</label>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>y₀</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                className={classes.input}
-                                style={{ width: '100%', height: '44px' }}
+                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
                                 value={initialConditions.y0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, y0: parseFloat(e.target.value) || 0 })}
                             />
                         </div>
-                        <div className={classes.conditionGroup}>
-                            <label className={classes.conditionLabel}>z₀</label>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>z₀</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                className={classes.input}
-                                style={{ width: '100%', height: '44px' }}
+                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
                                 value={initialConditions.z0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, z0: parseFloat(e.target.value) || 0 })}
                             />
                         </div>
-                        <div className={classes.conditionGroup}>
-                            <label className={classes.conditionLabel}>w₀</label>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>w₀</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                className={classes.input}
-                                style={{ width: '100%', height: '44px' }}
+                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
                                 value={initialConditions.w0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, w0: parseFloat(e.target.value) || 0 })}
                             />
