@@ -1,0 +1,20 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Using Node version"
+        - node -v || nvm install 18
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    # If you're building a static app change this to the folder with the built assets.
+    # For Remix server builds Amplify static hosting may not be suitable (use EB/ECS for server).
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
