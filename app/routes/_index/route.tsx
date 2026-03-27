@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import styles from './_index.module.scss';
 import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import commonStyles from '~/styles/common-styles.module.scss';
@@ -158,95 +158,125 @@ export default function HomePage() {
             <div className={styles.title}>AI Math Stumper</div>
             
             {/* Matrix Input Grid */}
-            <div className={classes.grid}>
-                {Array.from({ length: 16 }, (_, i) => (
-                    <input
-                        key={i}
-                        type="number"
-                        step="0.1"
-                        className={classes.input}
-                        value={matrix[i]}
-                        onChange={(e) => handleMatrixChange(i, e.target.value)}
-                        placeholder="0"
-                    />
-                ))}
-            </div>
-            
-            {/* Initial Conditions */}
-            <div className={classes.initialConditions}>
-                <div className={classes.conditionGroup}>
-                    <label className={classes.conditionLabel}>x₀</label>
-                    <input
-                        type="number"
-                        step="0.1"
-                        className={classes.input}
-                        style={{ width: '80px', height: '40px' }}
-                        value={initialConditions.x0}
-                        onChange={(e) => setInitialConditions({ ...initialConditions, x0: parseFloat(e.target.value) || 0 })}
-                    />
-                </div>
-                <div className={classes.conditionGroup}>
-                    <label className={classes.conditionLabel}>y₀</label>
-                    <input
-                        type="number"
-                        step="0.1"
-                        className={classes.input}
-                        style={{ width: '80px', height: '40px' }}
-                        value={initialConditions.y0}
-                        onChange={(e) => setInitialConditions({ ...initialConditions, y0: parseFloat(e.target.value) || 0 })}
-                    />
-                </div>
-                <div className={classes.conditionGroup}>
-                    <label className={classes.conditionLabel}>z₀</label>
-                    <input
-                        type="number"
-                        step="0.1"
-                        className={classes.input}
-                        style={{ width: '80px', height: '40px' }}
-                        value={initialConditions.z0}
-                        onChange={(e) => setInitialConditions({ ...initialConditions, z0: parseFloat(e.target.value) || 0 })}
-                    />
-                </div>
-                <div className={classes.conditionGroup}>
-                    <label className={classes.conditionLabel}>w₀</label>
-                    <input
-                        type="number"
-                        step="0.1"
-                        className={classes.input}
-                        style={{ width: '80px', height: '40px' }}
-                        value={initialConditions.w0}
-                        onChange={(e) => setInitialConditions({ ...initialConditions, w0: parseFloat(e.target.value) || 0 })}
-                    />
+            <div style={{ display: 'block', visibility: 'visible', opacity: '1', position: 'relative', zIndex: '9999', backgroundColor: 'rgba(255, 255, 255, 0.9)', padding: '24px', borderRadius: '12px', border: '2px solid #000000', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', margin: '20px auto', maxWidth: '800px' }}>
+                <span style={{ display: 'block', visibility: 'visible', opacity: '1', position: 'relative', zIndex: '9999', fontSize: '1.2rem', fontWeight: 'bold', color: '#000000', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', textAlign: 'center' }}>COEFFICIENT MATRIX A</span>
+                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr 1fr 1fr 1fr', gap: '12px', alignItems: 'center' }}>
+                    {/* Column headers */}
+                    <div style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}></div>
+                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>x</div>
+                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>y</div>
+                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>z</div>
+                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>w</div>
+                    
+                    {/* Matrix rows */}
+                    {Array.from({ length: 4 }, (_, row) => (
+                        <Fragment key={row}>
+                            <div className={classes.matrixRowLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'right', paddingRight: '8px' }}>{['x', 'y', 'z', 'w'][row]}'</div>
+                            {Array.from({ length: 4 }, (_, col) => {
+                                const index = row * 4 + col;
+                                return (
+                                    <input
+                                        key={index}
+                                        type="number"
+                                        step="0.1"
+                                        className={classes.input}
+                                        style={{ width: '100%', height: '50px', padding: '12px', fontSize: '1.1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '8px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                                        value={matrix[index]}
+                                        onChange={(e) => handleMatrixChange(index, e.target.value)}
+                                        placeholder="0"
+                                    />
+                                );
+                            })}
+                        </Fragment>
+                    ))}
                 </div>
             </div>
             
-            {/* Target Time */}
-            <div className={classes.targetTime}>
-                <label className={classes.targetLabel}>Target Time (t_f)</label>
-                <input
-                    type="number"
-                    step="0.1"
-                    className={classes.input}
-                    style={{ width: '120px', height: '40px' }}
-                    value={targetTime}
-                    onChange={(e) => setTargetTime(parseFloat(e.target.value) || 0)}
-                />
+            {/* Input Containers */}
+            <div className={classes.inputsContainer}>
+                {/* Initial Conditions */}
+                <div className={classes.initialConditions}>
+                    <div className={classes.conditionsTitle}>Initial Conditions</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                        <div className={classes.conditionGroup}>
+                            <label className={classes.conditionLabel}>x₀</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                className={classes.input}
+                                style={{ width: '100%', height: '44px' }}
+                                value={initialConditions.x0}
+                                onChange={(e) => setInitialConditions({ ...initialConditions, x0: parseFloat(e.target.value) || 0 })}
+                            />
+                        </div>
+                        <div className={classes.conditionGroup}>
+                            <label className={classes.conditionLabel}>y₀</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                className={classes.input}
+                                style={{ width: '100%', height: '44px' }}
+                                value={initialConditions.y0}
+                                onChange={(e) => setInitialConditions({ ...initialConditions, y0: parseFloat(e.target.value) || 0 })}
+                            />
+                        </div>
+                        <div className={classes.conditionGroup}>
+                            <label className={classes.conditionLabel}>z₀</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                className={classes.input}
+                                style={{ width: '100%', height: '44px' }}
+                                value={initialConditions.z0}
+                                onChange={(e) => setInitialConditions({ ...initialConditions, z0: parseFloat(e.target.value) || 0 })}
+                            />
+                        </div>
+                        <div className={classes.conditionGroup}>
+                            <label className={classes.conditionLabel}>w₀</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                className={classes.input}
+                                style={{ width: '100%', height: '44px' }}
+                                value={initialConditions.w0}
+                                onChange={(e) => setInitialConditions({ ...initialConditions, w0: parseFloat(e.target.value) || 0 })}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Target Time */}
+                <div className={classes.targetTime}>
+                    <div className={classes.targetTitle}>Target Time</div>
+                    <div className={classes.conditionGroup}>
+                        <label className={classes.targetLabel}>Final Time (t_f)</label>
+                        <input
+                            type="number"
+                            step="0.1"
+                            className={classes.input}
+                            style={{ width: '100%', height: '44px' }}
+                            value={targetTime}
+                            onChange={(e) => setTargetTime(parseFloat(e.target.value) || 0)}
+                        />
+                    </div>
+                </div>
             </div>
+            
             
             {/* Buttons */}
-            <div className={classes.buttonGroup}>
+            <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', margin: '10px 0', flexWrap: 'wrap' }}>
                 <button 
-                    className={classNames(commonStyles.primaryButton, styles.button)}
+                    style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 'bold', backgroundColor: '#007bff', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', transition: 'all 0.3s ease' }}
                     onClick={handleGenerateRank1}
                 >
                     Generate Rank-1 Matrix
                 </button>
                 <button 
-                    className={classNames(commonStyles.primaryButton, styles.button)}
+                    style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 'bold', backgroundColor: '#28a745', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', transition: 'all 0.3s ease' }}
                     onClick={handleCreateTask}
                     disabled={loading}
                 >
-                    {loading ? 'Solving...' : 'Solve ODE'}
+                    {loading ? 'Solving...' : 'Solve ODE System'}
                 </button>
             </div>
             

@@ -7,7 +7,7 @@ import { netlifyPlugin } from '@netlify/remix-adapter/plugin';
 export default defineConfig({
     plugins: [
         remix({
-            ignoredRouteFiles: ['**/*.module.scss'],
+            ignoredRouteFiles: ['**/*.client.tsx', '**/*.client.ts'],
         }),
         tsconfigPaths(),
         netlifyPlugin(),
