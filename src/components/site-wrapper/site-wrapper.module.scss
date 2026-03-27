@@ -10,7 +10,7 @@
 .content {
     min-height: min-content;
     flex-grow: 1;
-    background-color: #f5f5f5;
+    background-color: var(--app-surface);
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -39,7 +39,7 @@
 .conditionLabel {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #555;
+    color: #ffffff !important;
 }
 
 .targetTime {
@@ -53,7 +53,7 @@
 .targetLabel {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #555;
+    color: #ffffff !important;
 }
 
 .buttonGroup {
@@ -75,7 +75,7 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 15px;
-    color: #333;
+    color: var(--app-text);
 }
 
 .solutionValues {
@@ -97,13 +97,13 @@
 
 .solutionLabel {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--app-text);
 }
 
 .solutionValue {
     font-size: 1.3rem;
     font-weight: bold;
-    color: #007bff;
+    color: var(--app-accent);
 }
 
 .metrics {
@@ -115,12 +115,13 @@
 .metricItem {
     font-size: 1.1rem;
     margin: 8px 0;
+    color: var(--app-text);
 }
 
 .loading {
     text-align: center;
     padding: 20px;
-    color: #666;
+    color: var(--app-text);
 }
 
 .latexSolution {
@@ -136,7 +137,7 @@
     font-family: 'Times New Roman', serif;
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #333;
+    color: var(--app-text);
     white-space: pre-wrap;
 }
 
@@ -151,7 +152,7 @@
 .explanationContent {
     font-size: 1rem;
     line-height: 1.6;
-    color: #444;
+    color: var(--app-text);
 }
 
 .explanationContent p {
@@ -171,14 +172,14 @@
 .stepTitle {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--app-text);
     margin-bottom: 12px;
 }
 
 .stepProse {
     font-size: 1rem;
     line-height: 1.6;
-    color: #555;
+    color: var(--app-text);
     margin-bottom: 15px;
 }
 

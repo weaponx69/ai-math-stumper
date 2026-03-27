@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import styles from './site-wrapper.module.scss';
 import { Header } from '../header/header';
 import { Footer } from '../site-footer/site-footer';
+import '~/styles/index.scss';
 
 export interface SiteWrapperProps {
     className?: string;
