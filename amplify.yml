@@ -1,10 +1,14 @@
 version: 1
 frontend:
+  # Ask Amplify to use Node 18 runtime for the build image
+  runtime:
+    nodejs: 18
   phases:
     preBuild:
       commands:
-        - echo "Using Node version"
-        - node -v || nvm install 18
+        - echo "Node version: $(node -v || true)"
+        # Ensure devDependencies are installed during Amplify build
+        - export NPM_CONFIG_PRODUCTION=false
         - npm ci
     build:
       commands:
