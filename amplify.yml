@@ -8,7 +8,8 @@ frontend:
         - npm ci
     build:
       commands:
-        - npm run build
+        # Build client-only assets with Vite to avoid Remix server-side build
+        - npm run build:client
   artifacts:
     # Use the Remix client build artifacts for static hosting. If you intend to
     # run Remix as a server (SSR) you'll need a server host (EB/ECS) or Amplify
