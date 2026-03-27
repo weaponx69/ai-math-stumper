@@ -19,4 +19,11 @@ body {
     justify-content: center;
     min-width: 320px;
     min-height: 100vh;
+    /* App theme: default to blue background and light text to restore historic look */
+    --app-bg: #072343; /* deep blue */
+    --app-surface: #0b3b66; /* surface blue */
+    --app-accent: #3b82f6; /* accent blue */
+    --app-text: #ffffff;
+    background-color: var(--app-bg);
+    color: var(--app-text);
 }
