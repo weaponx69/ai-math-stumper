@@ -1,0 +1,21 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Using Node version"
+        - node -v || nvm install 18
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    # Use the Remix client build artifacts for static hosting. If you intend to
+    # run Remix as a server (SSR) you'll need a server host (EB/ECS) or Amplify
+    # SSR support instead of static hosting.
+    baseDirectory: build/client
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
