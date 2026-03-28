@@ -174,7 +174,7 @@ export default function SimpleHomePage() {
             }}>
                 <h1 style={{
                     textAlign: 'center',
-                    color: '#333',
+                    color: '#000000',
                     marginBottom: '30px'
                 }}>AI Math Stumper - Simple React Frontend</h1>
                 
@@ -194,35 +194,40 @@ export default function SimpleHomePage() {
                         textAlign: 'center',
                         padding: '10px',
                         background: '#e9ecef',
-                        borderRadius: '4px'
+                        borderRadius: '4px',
+                        color: '#000000'
                     }}></div>
                     <div style={{
                         fontWeight: 'bold',
                         textAlign: 'center',
                         padding: '10px',
                         background: '#e9ecef',
-                        borderRadius: '4px'
+                        borderRadius: '4px',
+                        color: '#000000'
                     }}>x</div>
                     <div style={{
                         fontWeight: 'bold',
                         textAlign: 'center',
                         padding: '10px',
                         background: '#e9ecef',
-                        borderRadius: '4px'
+                        borderRadius: '4px',
+                        color: '#000000'
                     }}>y</div>
                     <div style={{
                         fontWeight: 'bold',
                         textAlign: 'center',
                         padding: '10px',
                         background: '#e9ecef',
-                        borderRadius: '4px'
+                        borderRadius: '4px',
+                        color: '#000000'
                     }}>z</div>
                     <div style={{
                         fontWeight: 'bold',
                         textAlign: 'center',
                         padding: '10px',
                         background: '#e9ecef',
-                        borderRadius: '4px'
+                        borderRadius: '4px',
+                        color: '#000000'
                     }}>w</div>
                     
                     {/* Matrix rows */}
@@ -232,7 +237,8 @@ export default function SimpleHomePage() {
                                 fontWeight: 'bold',
                                 textAlign: 'right',
                                 paddingRight: '8px',
-                                paddingTop: '10px'
+                                paddingTop: '10px',
+                                color: '#000000'
                             }}>{['x', 'y', 'z', 'w'][row]}&#39;</div>
                             {Array.from({ length: 4 }, (_, col) => {
                                 const index = row * 4 + col;
@@ -272,7 +278,7 @@ export default function SimpleHomePage() {
                         padding: '20px',
                         borderRadius: '8px'
                     }}>
-                        <h3 style={{ marginTop: 0, color: '#333' }}>Initial Conditions</h3>
+                        <h3 style={{ marginTop: 0, color: '#000000' }}>Initial Conditions</h3>
                         <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
                             <label style={{ width: '80px', fontWeight: 'bold' }}>x₀:</label>
                             <input
@@ -345,7 +351,7 @@ export default function SimpleHomePage() {
                         padding: '20px',
                         borderRadius: '8px'
                     }}>
-                        <h3 style={{ marginTop: 0, color: '#333' }}>Target Time</h3>
+                        <h3 style={{ marginTop: 0, color: '#000000' }}>Target Time</h3>
                         <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
                             <label style={{ width: '80px', fontWeight: 'bold' }}>t_f:</label>
                             <input
@@ -455,7 +461,7 @@ export default function SimpleHomePage() {
                         margin: '20px 0',
                         border: '2px solid #007bff'
                     }}>
-                        <h3 style={{ marginTop: 0, color: '#007bff' }}>
+                        <h3 style={{ marginTop: 0, color: '#000000' }}>
                             Solution at t = {targetTime}
                         </h3>
                         
@@ -471,7 +477,7 @@ export default function SimpleHomePage() {
                                 borderRadius: '4px',
                                 border: '1px solid #007bff'
                             }}>
-                                <strong>x(t):</strong> {solution.final_values[0].toFixed(6)}
+                                <strong style={{ color: '#000000' }}>x(t):</strong> <span style={{ color: '#000000' }}>{solution.final_values[0].toFixed(6)}</span>
                             </div>
                             <div style={{
                                 background: 'white',
@@ -479,7 +485,7 @@ export default function SimpleHomePage() {
                                 borderRadius: '4px',
                                 border: '1px solid #007bff'
                             }}>
-                                <strong>y(t):</strong> {solution.final_values[1].toFixed(6)}
+                                <strong style={{ color: '#000000' }}>y(t):</strong> <span style={{ color: '#000000' }}>{solution.final_values[1].toFixed(6)}</span>
                             </div>
                             <div style={{
                                 background: 'white',
@@ -487,7 +493,7 @@ export default function SimpleHomePage() {
                                 borderRadius: '4px',
                                 border: '1px solid #007bff'
                             }}>
-                                <strong>z(t):</strong> {solution.final_values[2].toFixed(6)}
+                                <strong style={{ color: '#000000' }}>z(t):</strong> <span style={{ color: '#000000' }}>{solution.final_values[2].toFixed(6)}</span>
                             </div>
                             <div style={{
                                 background: 'white',
@@ -495,7 +501,7 @@ export default function SimpleHomePage() {
                                 borderRadius: '4px',
                                 border: '1px solid #007bff'
                             }}>
-                                <strong>w(t):</strong> {solution.final_values[3].toFixed(6)}
+                                <strong style={{ color: '#000000' }}>w(t):</strong> <span style={{ color: '#000000' }}>{solution.final_values[3].toFixed(6)}</span>
                             </div>
                         </div>
                         
@@ -506,11 +512,11 @@ export default function SimpleHomePage() {
                             margin: '15px 0',
                             border: '1px solid #ffc107'
                         }}>
-                            <strong>Metrics:</strong><br/>
-                            Weighted Sum (S): {solution.stored_metrics.weighted_sum.toFixed(6)}<br/>
-                            Arc Length: {solution.stored_metrics.arc_length.toFixed(6)}<br/>
-                            Curvature: {solution.stored_metrics.curvature.toFixed(6)}<br/>
-                            Final Solution (Σ): {solution.stored_metrics.final_solution}
+                            <strong style={{ color: '#000000' }}>Metrics:</strong><br/>
+                            <span style={{ color: '#000000' }}>Weighted Sum (S): {solution.stored_metrics.weighted_sum.toFixed(6)}</span><br/>
+                            <span style={{ color: '#000000' }}>Arc Length: {solution.stored_metrics.arc_length.toFixed(6)}</span><br/>
+                            <span style={{ color: '#000000' }}>Curvature: {solution.stored_metrics.curvature.toFixed(6)}</span><br/>
+                            <span style={{ color: '#000000' }}>Final Solution (Σ): {solution.stored_metrics.final_solution}</span>
                         </div>
                         
                         {/* LaTeX Solution Display */}
@@ -521,18 +527,18 @@ export default function SimpleHomePage() {
                                 borderRadius: '8px',
                                 margin: '15px 0'
                             }}>
-                                <h3 style={{ marginTop: 0, color: '#333' }}>Step-by-Step Solution</h3>
+                                <h3 style={{ marginTop: 0, color: '#000000' }}>Step-by-Step Solution</h3>
                                 {parseLatexSolution(solution.latex_solution).map((step, idx) => (
                                     <div key={idx} style={{ marginBottom: '15px' }}>
                                         <div style={{
                                             fontWeight: 'bold',
-                                            color: '#007bff',
+                                            color: '#000000',
                                             marginBottom: '5px'
                                         }}>
                                             {step.title}
                                         </div>
                                         {step.prose && (
-                                            <p style={{ margin: '5px 0' }}>{step.prose}</p>
+                                            <p style={{ margin: '5px 0', color: '#000000' }}>{step.prose}</p>
                                         )}
                                         {step.math.map((math, mIdx) => (
                                             <div key={mIdx} style={{ margin: '10px 0' }}>
@@ -541,7 +547,8 @@ export default function SimpleHomePage() {
                                                     padding: '10px',
                                                     borderRadius: '4px',
                                                     border: '1px solid #ddd',
-                                                    fontFamily: 'monospace'
+                                                    fontFamily: 'monospace',
+                                                    color: '#000000'
                                                 }}>
                                                     {math}
                                                 </div>
@@ -564,8 +571,8 @@ export default function SimpleHomePage() {
                         border: '2px solid #28a745',
                         whiteSpace: 'pre-wrap'
                     }}>
-                        <h3 style={{ marginTop: 0, color: '#155724' }}>Explanation</h3>
-                        <div>{explanation}</div>
+                        <h3 style={{ marginTop: 0, color: '#000000' }}>Explanation</h3>
+                        <div style={{ color: '#000000' }}>{explanation}</div>
                     </div>
                 )}
             </div>
