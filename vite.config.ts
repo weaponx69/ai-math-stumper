@@ -2,7 +2,6 @@ import { vitePlugin as remix } from '@remix-run/dev';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'node:path';
-import { netlifyPlugin } from '@netlify/remix-adapter/plugin';
 
 export default defineConfig({
     plugins: [
@@ -10,7 +9,6 @@ export default defineConfig({
             ignoredRouteFiles: ['**/*.client.tsx', '**/*.client.ts'],
         }),
         tsconfigPaths(),
-        netlifyPlugin(),
     ],
     resolve: {
         alias: {
