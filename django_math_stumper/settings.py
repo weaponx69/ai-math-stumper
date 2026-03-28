@@ -78,17 +78,28 @@ WSGI_APPLICATION = 'django_math_stumper.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_DB', default='math_stumper'),
-        'USER': config('POSTGRES_USER', default='math_user'),
-        'PASSWORD': config('POSTGRES_PASSWORD', default='math_password'),
-        'HOST': config('POSTGRES_HOST', default='db'),
-        'PORT': config('POSTGRES_PORT', default='5432'),
-        'CONN_MAX_AGE': 60,  # Persistent connection for 60s to reduce Docker networking overhead
+# Use SQLite for development, PostgreSQL for production
+if config('DEBUG', default=True, cast=bool):
+    # Development - use SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    # Production - use PostgreSQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('POSTGRES_DB', default='math_stumper'),
+            'USER': config('POSTGRES_USER', default='math_user'),
+            'PASSWORD': config('POSTGRES_PASSWORD', default='math_password'),
+            'HOST': config('POSTGRES_HOST', default='db'),
+            'PORT': config('POSTGRES_PORT', default='5432'),
+            'CONN_MAX_AGE': 60,
+        }
+    }
 
 
 # Password validation
@@ -155,7 +166,7 @@ LOGOUT_REDIRECT_URL = 'http://localhost:3000'
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=True, cast=bool)
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000', cast=lambda v: [s.strip() for s in v.split(',')])
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:5174,http://127.0.0.1:5174,http://localhost:3000,http://127.0.0.1:3000', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application settings
 ODE_SOLVER_SETTINGS = {

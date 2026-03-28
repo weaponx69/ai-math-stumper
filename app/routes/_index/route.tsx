@@ -62,6 +62,9 @@ export default function HomePage() {
     const [taskId, setTaskId] = useState<number | null>(null);
     const [solution, setSolution] = useState<SolutionDetails | null>(null);
     
+    // State for AI explanation
+    const [explanation, setExplanation] = useState<string | null>(null);
+    
     // Loading and error states
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -75,6 +78,9 @@ export default function HomePage() {
 
     // Handle generating a rank-1 matrix
     const handleGenerateRank1 = () => {
+        console.log('Generate button clicked!');
+        console.log('Current matrix state:', matrix);
+        
         // Generate rank-1 matrix: u * v^T
         // Random vectors u and v
         const u = [
@@ -97,14 +103,19 @@ export default function HomePage() {
                 newMatrix.push(parseFloat((u[i] * v[j]).toFixed(4)));
             }
         }
+        console.log('Setting new matrix:', newMatrix);
         setMatrix(newMatrix);
         setSolution(null);
         setTaskId(null);
         setError(null);
+        
+        // Force a re-render to ensure state update
+        console.log('Matrix state after update:', newMatrix);
     };
 
     // Handle creating the custom task
     const handleCreateTask = async () => {
+        console.log('Solve button clicked!');
         setLoading(true);
         setError(null);
         
@@ -115,18 +126,22 @@ export default function HomePage() {
                 coefficients.push(matrix.slice(i * 4, (i + 1) * 4));
             }
             
+            console.log('Creating task with coefficients:', coefficients);
             const task: ODETask = await odeApi.createCustomTask({
                 coefficients: { linear: coefficients },
                 initial_conditions: initialConditions,
                 target_time: targetTime,
             });
             
+            console.log('Task created:', task);
             setTaskId(task.task_id);
             
             // Automatically get the solution
             const sol = await odeApi.getSolution(task.task_id);
+            console.log('Solution received:', sol);
             setSolution(sol);
         } catch (err) {
+            console.error('Error creating task:', err);
             setError(err instanceof Error ? err.message : 'Failed to create task');
         } finally {
             setLoading(false);
@@ -149,9 +164,6 @@ export default function HomePage() {
             setLoading(false);
         }
     };
-
-    // State for AI explanation
-    const [explanation, setExplanation] = useState<string | null>(null);
 
     return (
         <div className={styles.root}>
@@ -260,15 +272,15 @@ export default function HomePage() {
             
             
             {/* Buttons */}
-            <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', margin: '10px 0', flexWrap: 'wrap' }}>
+            <div className={classes.buttonGroup}>
                 <button 
-                    style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 'bold', backgroundColor: '#007bff', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', transition: 'all 0.3s ease' }}
+                    className={classNames(commonStyles.primaryButton, classes.generateBtn)}
                     onClick={handleGenerateRank1}
                 >
                     Generate Rank-1 Matrix
                 </button>
                 <button 
-                    style={{ padding: '12px 24px', fontSize: '1rem', fontWeight: 'bold', backgroundColor: '#28a745', color: '#ffffff', border: 'none', borderRadius: '6px', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', transition: 'all 0.3s ease' }}
+                    className={classNames(commonStyles.primaryButton, classes.solveBtn)}
                     onClick={handleCreateTask}
                     disabled={loading}
                 >
