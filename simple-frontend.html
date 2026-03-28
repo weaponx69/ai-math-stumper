@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Math Stumper - Simple Frontend</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .matrix-label {
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        
+        .matrix-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .control-group h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .input-row label {
+            width: 80px;
+            font-weight: bold;
+        }
+        
+        .input-row input {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-generate {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn-generate:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-solve {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-solve:hover {
+            background-color: #1e7e34;
+        }
+        
+        .btn-explain {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        .btn-explain:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-disabled {
+            background-color: #6c757d !important;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #007bff;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .solution {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #007bff;
+        }
+        
+        .solution h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .solution-item {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #007bff;
+        }
+        
+        .metrics {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #ffc107;
+        }
+        
+        .explanation {
+            background: #d4edda;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #28a745;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Math Stumper - Simple Frontend</h1>
+        
+        <!-- Matrix Input -->
+        <div class="matrix-grid">
+            <div class="matrix-label"></div>
+            <div class="matrix-label">x</div>
+            <div class="matrix-label">y</div>
+            <div class="matrix-label">z</div>
+            <div class="matrix-label">w</div>
+            
+            <!-- Row 1 -->
+            <div class="matrix-label">x'</div>
+            <input type="number" class="matrix-input" id="m0" value="0">
+            <input type="number" class="matrix-input" id="m1" value="0">
+            <input type="number" class="matrix-input" id="m2" value="0">
+            <input type="number" class="matrix-input" id="m3" value="0">
+            
+            <!-- Row 2 -->
+            <div class="matrix-label">y'</div>
+            <input type="number" class="matrix-input" id="m4" value="0">
+            <input type="number" class="matrix-input" id="m5" value="0">
+            <input type="number" class="matrix-input" id="m6" value="0">
+            <input type="number" class="matrix-input" id="m7" value="0">
+            
+            <!-- Row 3 -->
+            <div class="matrix-label">z'</div>
+            <input type="number" class="matrix-input" id="m8" value="0">
+            <input type="number" class="matrix-input" id="m9" value="0">
+            <input type="number" class="matrix-input" id="m10" value="0">
+            <input type="number" class="matrix-input" id="m11" value="0">
+            
+            <!-- Row 4 -->
+            <div class="matrix-label">w'</div>
+            <input type="number" class="matrix-input" id="m12" value="0">
+            <input type="number" class="matrix-input" id="m13" value="0">
+            <input type="number" class="matrix-input" id="m14" value="0">
+            <input type="number" class="matrix-input" id="m15" value="0">
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <h3>Initial Conditions</h3>
+                <div class="input-row">
+                    <label for="x0">x₀:</label>
+                    <input type="number" id="x0" value="1">
+                </div>
+                <div class="input-row">
+                    <label for="y0">y₀:</label>
+                    <input type="number" id="y0" value="1">
+                </div>
+                <div class="input-row">
+                    <label for="z0">z₀:</label>
+                    <input type="number" id="z0" value="1">
+                </div>
+                <div class="input-row">
+                    <label for="w0">w₀:</label>
+                    <input type="number" id="w0" value="1">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Target Time</h3>
+                <div class="input-row">
+                    <label for="targetTime">t_f:</label>
+                    <input type="number" id="targetTime" value="1">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="buttons">
+            <button class="btn-generate" onclick="generateRank1Matrix()">Generate Rank-1 Matrix</button>
+            <button class="btn-solve" onclick="solveODE()" id="solveBtn">Solve ODE System</button>
+            <button class="btn-explain" onclick="getExplanation()" id="explainBtn" disabled>Get Explanation</button>
+        </div>
+        
+        <!-- Loading -->
+        <div id="loading" class="loading" style="display: none;">Solving the ODE system...</div>
+        
+        <!-- Error -->
+        <div id="error" class="error" style="display: none;"></div>
+        
+        <!-- Solution -->
+        <div id="solution" class="solution" style="display: none;">
+            <h3>Solution at t = <span id="solutionTime">1</span></h3>
+            <div class="solution-grid">
+                <div class="solution-item">
+                    <strong>x(t):</strong> <span id="xValue">0</span>
+                </div>
+                <div class="solution-item">
+                    <strong>y(t):</strong> <span id="yValue">0</span>
+                </div>
+                <div class="solution-item">
+                    <strong>z(t):</strong> <span id="zValue">0</span>
+                </div>
+                <div class="solution-item">
+                    <strong>w(t):</strong> <span id="wValue">0</span>
+                </div>
+            </div>
+            
+            <div class="metrics">
+                <strong>Metrics:</strong><br>
+                Weighted Sum (S): <span id="weightedSum">0</span><br>
+                Arc Length: <span id="arcLength">0</span><br>
+                Curvature: <span id="curvature">0</span><br>
+                Final Solution (Σ): <span id="finalSolution">0</span>
+            </div>
+        </div>
+        
+        <!-- Explanation -->
+        <div id="explanation" class="explanation" style="display: none;">
+            <h3>Explanation</h3>
+            <div id="explanationText"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentTaskId = null;
+        
+        // Generate Rank-1 Matrix
+        function generateRank1Matrix() {
+            console.log('Generate button clicked!');
+            
+            // Generate random vectors u and v
+            const u = [
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+            ];
+            const v = [
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+                Math.random() * 2 - 1,
+            ];
+            
+            // Compute u * v^T
+            const matrix = [];
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    matrix.push((u[i] * v[j]).toFixed(4));
+                }
+            }
+            
+            // Update inputs
+            for (let i = 0; i < 16; i++) {
+                document.getElementById('m' + i).value = matrix[i];
+            }
+            
+            // Reset solution and explanation
+            document.getElementById('solution').style.display = 'none';
+            document.getElementById('explanation').style.display = 'none';
+            document.getElementById('explainBtn').disabled = true;
+            currentTaskId = null;
+            
+            console.log('Matrix generated:', matrix);
+        }
+        
+        // Solve ODE System
+        async function solveODE() {
+            console.log('Solve button clicked!');
+            
+            // Get matrix values
+            const matrix = [];
+            for (let i = 0; i < 16; i++) {
+                matrix.push(parseFloat(document.getElementById('m' + i).value) || 0);
+            }
+            
+            // Convert to 2D array
+            const coefficients = [];
+            for (let i = 0; i < 4; i++) {
+                coefficients.push(matrix.slice(i * 4, (i + 1) * 4));
+            }
+            
+            // Get initial conditions
+            const initialConditions = {
+                x0: parseFloat(document.getElementById('x0').value) || 0,
+                y0: parseFloat(document.getElementById('y0').value) || 0,
+                z0: parseFloat(document.getElementById('z0').value) || 0,
+                w0: parseFloat(document.getElementById('w0').value) || 0,
+            };
+            
+            // Get target time
+            const targetTime = parseFloat(document.getElementById('targetTime').value) || 1;
+            
+            console.log('Creating task with:', { coefficients, initialConditions, targetTime });
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('solveBtn').disabled = true;
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/create_custom/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        coefficients: { linear: coefficients },
+                        initial_conditions: initialConditions,
+                        target_time: targetTime
+                    })
+                });
+                
+                if (response.ok) {
+                    const task = await response.json();
+                    console.log('Task created:', task);
+                    currentTaskId = task.task_id;
+                    
+                    // Get solution
+                    const solutionResponse = await fetch('http://localhost:8000/api/task/' + task.task_id + '/solution/');
+                    
+                    if (solutionResponse.ok) {
+                        const solution = await solutionResponse.json();
+                        console.log('Solution received:', solution);
+                        displaySolution(solution, targetTime);
+                        document.getElementById('explainBtn').disabled = false;
+                    } else {
+                        throw new Error('Failed to get solution: ' + solutionResponse.status);
+                    }
+                } else {
+                    throw new Error('Failed to create task: ' + response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('error').textContent = 'Error: ' + error.message;
+                document.getElementById('error').style.display = 'block';
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('solveBtn').disabled = false;
+            }
+        }
+        
+        // Get Explanation
+        async function getExplanation() {
+            if (!currentTaskId) return;
+            
+            console.log('Explanation button clicked!');
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/task/' + currentTaskId + '/explain/');
+                
+                if (response.ok) {
+                    const explanation = await response.json();
+                    console.log('Explanation received:', explanation);
+                    displayExplanation(explanation.explanation);
+                } else {
+                    throw new Error('Failed to get explanation: ' + response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('error').textContent = 'Error getting explanation: ' + error.message;
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+        
+        // Display Solution
+        function displaySolution(solution, targetTime) {
+            document.getElementById('solutionTime').textContent = targetTime;
+            document.getElementById('xValue').textContent = solution.final_values[0].toFixed(6);
+            document.getElementById('yValue').textContent = solution.final_values[1].toFixed(6);
+            document.getElementById('zValue').textContent = solution.final_values[2].toFixed(6);
+            document.getElementById('wValue').textContent = solution.final_values[3].toFixed(6);
+            
+            document.getElementById('weightedSum').textContent = solution.stored_metrics.weighted_sum.toFixed(6);
+            document.getElementById('arcLength').textContent = solution.stored_metrics.arc_length.toFixed(6);
+            document.getElementById('curvature').textContent = solution.stored_metrics.curvature.toFixed(6);
+            document.getElementById('finalSolution').textContent = solution.stored_metrics.final_solution;
+            
+            document.getElementById('solution').style.display = 'block';
+        }
+        
+        // Display Explanation
+        function displayExplanation(explanation) {
+            document.getElementById('explanationText').textContent = explanation;
+            document.getElementById('explanation').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

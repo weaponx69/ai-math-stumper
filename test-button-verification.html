@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Verification Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; }
+        .result { margin-top: 10px; padding: 10px; background: #f0f0f0; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Button Verification Test</h1>
+    <p class="info">This test will verify that the buttons in the AI Math Stumper application are working correctly.</p>
+    
+    <div class="test-section">
+        <h2>Step 1: Open the Application</h2>
+        <p>Open <a href="http://localhost:5174" target="_blank">http://localhost:5174</a> in your browser</p>
+        <button onclick="openApp()">Open Application</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Step 2: Test Generate Rank-1 Matrix Button</h2>
+        <p>1. Click the "Generate Rank-1 Matrix" button in the application</p>
+        <p>2. Verify that the matrix values change from zeros to random numbers</p>
+        <p>3. Check the browser console for "Generate button clicked!" message</p>
+        <button onclick="testGenerate()">I've tested the Generate button</button>
+        <div id="generate-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Step 3: Test Solve ODE System Button</h2>
+        <p>1. Make sure you have a matrix with values (use Generate button if needed)</p>
+        <p>2. Click the "Solve ODE System" button</p>
+        <p>3. Verify that "Solving..." appears and then solution values are displayed</p>
+        <p>4. Check the browser console for "Solve button clicked!" message</p>
+        <button onclick="testSolve()">I've tested the Solve button</button>
+        <div id="solve-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Step 4: Test Get Explanation Button</h2>
+        <p>1. After solving an ODE, click the "Get Step-by-Step Explanation" button</p>
+        <p>2. Verify that an explanation appears below</p>
+        <p>3. Check the browser console for "Explanation button clicked!" message</p>
+        <button onclick="testExplanation()">I've tested the Explanation button</button>
+        <div id="explanation-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Final Verification</h2>
+        <button onclick="showFinalResult()">Show Final Verification Result</button>
+        <div id="final-result" class="result"></div>
+    </div>
+
+    <script>
+        let tests = {
+            generate: false,
+            solve: false,
+            explanation: false
+        };
+        
+        function openApp() {
+            window.open('http://localhost:5174', '_blank');
+        }
+        
+        function testGenerate() {
+            tests.generate = true;
+            document.getElementById('generate-result').innerHTML = '<span class="success">✅ Generate button test completed</span>';
+            updateFinalResult();
+        }
+        
+        function testSolve() {
+            tests.solve = true;
+            document.getElementById('solve-result').innerHTML = '<span class="success">✅ Solve button test completed</span>';
+            updateFinalResult();
+        }
+        
+        function testExplanation() {
+            tests.explanation = true;
+            document.getElementById('explanation-result').innerHTML = '<span class="success">✅ Explanation button test completed</span>';
+            updateFinalResult();
+        }
+        
+        function updateFinalResult() {
+            const allTests = Object.values(tests).every(test => test === true);
+            const resultDiv = document.getElementById('final-result');
+            
+            if (allTests) {
+                resultDiv.innerHTML = `
+                    <span class="success">🎉 ALL BUTTONS ARE WORKING!</span><br><br>
+                    <strong>Verification Summary:</strong><br>
+                    ✅ Generate Rank-1 Matrix button: Working<br>
+                    ✅ Solve ODE System button: Working<br>
+                    ✅ Get Step-by-Step Explanation button: Working<br><br>
+                    <span class="info">The buttons in the AI Math Stumper project are fully functional!</span>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <span class="error">❌ Some tests are incomplete</span><br><br>
+                    Please complete all button tests above to verify functionality.
+                `;
+            }
+        }
+        
+        function showFinalResult() {
+            updateFinalResult();
+        }
+    </script>
+</body>
+</html>

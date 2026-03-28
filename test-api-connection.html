@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Connection</title>
+</head>
+<body>
+    <h1>Testing API Connection</h1>
+    <button id="testButton">Test API Call</button>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('testButton').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/create_custom/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        coefficients: { linear: [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]] },
+                        initial_conditions: { x0: 1, y0: 1, z0: 1, w0: 1 },
+                        target_time: 1
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = 'Success! API is working.<br>Task ID: ' + data.task_id;
+                } else {
+                    resultDiv.innerHTML = 'Error: ' + response.status + ' ' + response.statusText;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

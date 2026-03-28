@@ -1,13 +1,6 @@
-import classNames from 'classnames';
 import { useState, Fragment } from 'react';
-import styles from './_index.module.scss';
 import { LinksFunction, LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import commonStyles from '~/styles/common-styles.module.scss';
-import { getUrlOriginWithPath } from '~/utils';
 import { odeApi, ODETask, SolutionDetails } from '~/services/api';
-import reactKatexPkg from 'react-katex';
-const { InlineMath, BlockMath } = reactKatexPkg;
-import classes from './route.module.scss';
 
 // Parse the LaTeX solution into steps
 const parseLatexSolution = (latex: string): { title: string; prose: string; math: string[] }[] => {
@@ -40,10 +33,10 @@ const parseLatexSolution = (latex: string): { title: string; prose: string; math
 };
 
 export const loader = ({ request }: LoaderFunctionArgs) => {
-    return { canonicalUrl: getUrlOriginWithPath(request.url) };
+    return { canonicalUrl: new URL(request.url).origin };
 };
 
-export default function HomePage() {
+export default function SimpleHomePage() {
     // State for matrix coefficients (4x4 = 16 values)
     const [matrix, setMatrix] = useState<number[]>(Array(16).fill(0));
     
@@ -166,24 +159,81 @@ export default function HomePage() {
     };
 
     return (
-        <div className={styles.root}>
-            <div className={styles.title}>AI Math Stumper</div>
-            
-            {/* Matrix Input Grid */}
-            <div style={{ display: 'block', visibility: 'visible', opacity: '1', position: 'relative', zIndex: '9999', backgroundColor: 'rgba(255, 255, 255, 0.9)', padding: '24px', borderRadius: '12px', border: '2px solid #000000', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', margin: '20px auto', maxWidth: '800px' }}>
-                <span style={{ display: 'block', visibility: 'visible', opacity: '1', position: 'relative', zIndex: '9999', fontSize: '1.2rem', fontWeight: 'bold', color: '#000000', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', textAlign: 'center' }}>COEFFICIENT MATRIX A</span>
-                <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr 1fr 1fr 1fr', gap: '12px', alignItems: 'center' }}>
-                    {/* Column headers */}
-                    <div style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}></div>
-                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>x</div>
-                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>y</div>
-                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>z</div>
-                    <div className={classes.matrixColumnLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', paddingBottom: '8px' }}>w</div>
+        <div style={{
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            maxWidth: '1000px',
+            margin: '0 auto',
+            padding: '20px',
+            backgroundColor: '#f5f5f5'
+        }}>
+            <div style={{
+                background: 'white',
+                padding: '30px',
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+            }}>
+                <h1 style={{
+                    textAlign: 'center',
+                    color: '#333',
+                    marginBottom: '30px'
+                }}>AI Math Stumper - Simple React Frontend</h1>
+                
+                {/* Matrix Input Grid */}
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(5, 1fr)',
+                    gap: '10px',
+                    margin: '20px 0',
+                    background: '#f8f9fa',
+                    padding: '20px',
+                    borderRadius: '8px'
+                }}>
+                    {/* Headers */}
+                    <div style={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        padding: '10px',
+                        background: '#e9ecef',
+                        borderRadius: '4px'
+                    }}></div>
+                    <div style={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        padding: '10px',
+                        background: '#e9ecef',
+                        borderRadius: '4px'
+                    }}>x</div>
+                    <div style={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        padding: '10px',
+                        background: '#e9ecef',
+                        borderRadius: '4px'
+                    }}>y</div>
+                    <div style={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        padding: '10px',
+                        background: '#e9ecef',
+                        borderRadius: '4px'
+                    }}>z</div>
+                    <div style={{
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        padding: '10px',
+                        background: '#e9ecef',
+                        borderRadius: '4px'
+                    }}>w</div>
                     
                     {/* Matrix rows */}
                     {Array.from({ length: 4 }, (_, row) => (
                         <Fragment key={row}>
-                            <div className={classes.matrixRowLabel} style={{ fontSize: '0.8rem', fontWeight: '600', color: 'rgba(255, 255, 255, 0.7)', textAlign: 'right', paddingRight: '8px' }}>{['x', 'y', 'z', 'w'][row]}'</div>
+                            <div style={{
+                                fontWeight: 'bold',
+                                textAlign: 'right',
+                                paddingRight: '8px',
+                                paddingTop: '10px'
+                            }}>{['x', 'y', 'z', 'w'][row]}&#39;</div>
                             {Array.from({ length: 4 }, (_, col) => {
                                 const index = row * 4 + col;
                                 return (
@@ -191,8 +241,14 @@ export default function HomePage() {
                                         key={index}
                                         type="number"
                                         step="0.1"
-                                        className={classes.input}
-                                        style={{ width: '100%', height: '50px', padding: '12px', fontSize: '1.1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '8px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                                        style={{
+                                            width: '100%',
+                                            padding: '10px',
+                                            border: '2px solid #ddd',
+                                            borderRadius: '4px',
+                                            fontSize: '16px',
+                                            textAlign: 'center'
+                                        }}
                                         value={matrix[index]}
                                         onChange={(e) => handleMatrixChange(index, e.target.value)}
                                         placeholder="0"
@@ -202,248 +258,335 @@ export default function HomePage() {
                         </Fragment>
                     ))}
                 </div>
-            </div>
-            
-            {/* Input Containers */}
-            <div className={classes.inputsContainer}>
-                {/* Initial Conditions */}
-                <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)', padding: '20px', borderRadius: '10px', border: '1px solid #e0e0e0', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#333', marginBottom: '16px', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Initial Conditions</div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>x₀</label>
+                
+                {/* Input Controls */}
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '20px',
+                    margin: '20px 0'
+                }}>
+                    {/* Initial Conditions */}
+                    <div style={{
+                        background: '#f8f9fa',
+                        padding: '20px',
+                        borderRadius: '8px'
+                    }}>
+                        <h3 style={{ marginTop: 0, color: '#333' }}>Initial Conditions</h3>
+                        <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
+                            <label style={{ width: '80px', fontWeight: 'bold' }}>x₀:</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                                style={{
+                                    flex: 1,
+                                    padding: '8px',
+                                    border: '2px solid #ddd',
+                                    borderRadius: '4px',
+                                    fontSize: '16px'
+                                }}
                                 value={initialConditions.x0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, x0: parseFloat(e.target.value) || 0 })}
                             />
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>y₀</label>
+                        <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
+                            <label style={{ width: '80px', fontWeight: 'bold' }}>y₀:</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                                style={{
+                                    flex: 1,
+                                    padding: '8px',
+                                    border: '2px solid #ddd',
+                                    borderRadius: '4px',
+                                    fontSize: '16px'
+                                }}
                                 value={initialConditions.y0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, y0: parseFloat(e.target.value) || 0 })}
                             />
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>z₀</label>
+                        <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
+                            <label style={{ width: '80px', fontWeight: 'bold' }}>z₀:</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                                style={{
+                                    flex: 1,
+                                    padding: '8px',
+                                    border: '2px solid #ddd',
+                                    borderRadius: '4px',
+                                    fontSize: '16px'
+                                }}
                                 value={initialConditions.z0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, z0: parseFloat(e.target.value) || 0 })}
                             />
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <label style={{ fontSize: '0.9rem', fontWeight: '600', color: '#555', textAlign: 'center' }}>w₀</label>
+                        <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
+                            <label style={{ width: '80px', fontWeight: 'bold' }}>w₀:</label>
                             <input
                                 type="number"
                                 step="0.1"
-                                style={{ width: '100%', height: '44px', padding: '8px 12px', fontSize: '1rem', textAlign: 'center', border: '2px solid #000000', borderRadius: '6px', backgroundColor: '#ffffff', color: '#000000', boxSizing: 'border-box', transition: 'all 0.3s ease', fontFamily: 'Courier New, monospace', fontWeight: '600', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                                style={{
+                                    flex: 1,
+                                    padding: '8px',
+                                    border: '2px solid #ddd',
+                                    borderRadius: '4px',
+                                    fontSize: '16px'
+                                }}
                                 value={initialConditions.w0}
                                 onChange={(e) => setInitialConditions({ ...initialConditions, w0: parseFloat(e.target.value) || 0 })}
                             />
                         </div>
                     </div>
-                </div>
 
-                {/* Target Time */}
-                <div className={classes.targetTime}>
-                    <div className={classes.targetTitle}>Target Time</div>
-                    <div className={classes.conditionGroup}>
-                        <label className={classes.targetLabel}>Final Time (t_f)</label>
-                        <input
-                            type="number"
-                            step="0.1"
-                            className={classes.input}
-                            style={{ width: '100%', height: '44px' }}
-                            value={targetTime}
-                            onChange={(e) => setTargetTime(parseFloat(e.target.value) || 0)}
-                        />
+                    {/* Target Time */}
+                    <div style={{
+                        background: '#f8f9fa',
+                        padding: '20px',
+                        borderRadius: '8px'
+                    }}>
+                        <h3 style={{ marginTop: 0, color: '#333' }}>Target Time</h3>
+                        <div style={{ display: 'flex', gap: '10px', margin: '10px 0' }}>
+                            <label style={{ width: '80px', fontWeight: 'bold' }}>t_f:</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                style={{
+                                    flex: 1,
+                                    padding: '8px',
+                                    border: '2px solid #ddd',
+                                    borderRadius: '4px',
+                                    fontSize: '16px'
+                                }}
+                                value={targetTime}
+                                onChange={(e) => setTargetTime(parseFloat(e.target.value) || 0)}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            
-            {/* Buttons */}
-            <div className={classes.buttonGroup}>
-                <button 
-                    className={classNames(commonStyles.primaryButton, classes.generateBtn)}
-                    onClick={handleGenerateRank1}
-                >
-                    Generate Rank-1 Matrix
-                </button>
-                <button 
-                    className={classNames(commonStyles.primaryButton, classes.solveBtn)}
-                    onClick={handleCreateTask}
-                    disabled={loading}
-                >
-                    {loading ? 'Solving...' : 'Solve ODE System'}
-                </button>
-            </div>
-            
-            {/* Error Message */}
-            {error && (
-                <div className={classes.solution}>
-                    <p style={{ color: 'red' }}>Error: {error}</p>
+                
+                {/* Buttons */}
+                <div style={{
+                    display: 'flex',
+                    gap: '15px',
+                    justifyContent: 'center',
+                    margin: '20px 0'
+                }}>
+                    <button
+                        onClick={handleGenerateRank1}
+                        style={{
+                            padding: '12px 24px',
+                            fontSize: '16px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            backgroundColor: '#007bff',
+                            color: 'white'
+                        }}
+                    >
+                        Generate Rank-1 Matrix
+                    </button>
+                    <button
+                        onClick={handleCreateTask}
+                        disabled={loading}
+                        style={{
+                            padding: '12px 24px',
+                            fontSize: '16px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: loading ? 'not-allowed' : 'pointer',
+                            backgroundColor: loading ? '#6c757d' : '#28a745',
+                            color: 'white',
+                            opacity: loading ? 0.6 : 1
+                        }}
+                    >
+                        {loading ? 'Solving...' : 'Solve ODE System'}
+                    </button>
+                    <button
+                        onClick={handleGetExplanation}
+                        disabled={!taskId || loading}
+                        style={{
+                            padding: '12px 24px',
+                            fontSize: '16px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: (!taskId || loading) ? 'not-allowed' : 'pointer',
+                            backgroundColor: '#ffc107',
+                            color: '#333',
+                            opacity: (!taskId || loading) ? 0.6 : 1
+                        }}
+                    >
+                        Get Step-by-Step Explanation
+                    </button>
                 </div>
-            )}
-            
-            {/* Loading State */}
-            {loading && (
-                <div className={classes.loading}>
-                    Solving the ODE system...
-                </div>
-            )}
-            
-            {/* Solution Display */}
-            {solution && !loading && (
-                <div className={classes.solution}>
-                    <div className={classes.solutionTitle}>Solution at t = {targetTime}</div>
-                    
-                    <div className={classes.solutionValues}>
-                        <div className={classes.solutionItem}>
-                            <span className={classes.solutionLabel}>x(t)</span>
-                            <span className={classes.solutionValue}>{solution.final_values[0].toFixed(6)}</span>
-                        </div>
-                        <div className={classes.solutionItem}>
-                            <span className={classes.solutionLabel}>y(t)</span>
-                            <span className={classes.solutionValue}>{solution.final_values[1].toFixed(6)}</span>
-                        </div>
-                        <div className={classes.solutionItem}>
-                            <span className={classes.solutionLabel}>z(t)</span>
-                            <span className={classes.solutionValue}>{solution.final_values[2].toFixed(6)}</span>
-                        </div>
-                        <div className={classes.solutionItem}>
-                            <span className={classes.solutionLabel}>w(t)</span>
-                            <span className={classes.solutionValue}>{solution.final_values[3].toFixed(6)}</span>
-                        </div>
+                
+                {/* Error Message */}
+                {error && (
+                    <div style={{
+                        color: '#dc3545',
+                        background: '#f8d7da',
+                        border: '1px solid #f5c6cb',
+                        padding: '10px',
+                        borderRadius: '4px',
+                        margin: '10px 0'
+                    }}>
+                        Error: {error}
                     </div>
-                    
-                    <div className={classes.metrics}>
-                        <div className={classes.metricItem}>
-                            <strong>Weighted Sum (S):</strong> {solution.stored_metrics.weighted_sum.toFixed(6)}
-                        </div>
-                        <div className={classes.metricItem}>
-                            <strong>Arc Length:</strong> {solution.stored_metrics.arc_length.toFixed(6)}
-                        </div>
-                        <div className={classes.metricItem}>
-                            <strong>Curvature:</strong> {solution.stored_metrics.curvature.toFixed(6)}
-                        </div>
-                        <div className={classes.metricItem}>
-                            <strong>Final Solution (Σ):</strong> {solution.stored_metrics.final_solution}
-                        </div>
+                )}
+                
+                {/* Loading State */}
+                {loading && (
+                    <div style={{
+                        textAlign: 'center',
+                        color: '#007bff',
+                        fontWeight: 'bold',
+                        margin: '10px 0'
+                    }}>
+                        Solving the ODE system...
                     </div>
-                    
-                    {/* LaTeX Solution Display */}
-                    {solution.latex_solution && (
-                        <div className={classes.latexSolution}>
-                            <div className={classes.solutionTitle}>Step-by-Step Solution</div>
-                            {parseLatexSolution(solution.latex_solution).map((step, idx) => (
-                                <div key={idx} className={classes.step}>
-                                    <div className={classes.stepTitle}>{step.title}</div>
-                                    {step.prose && <p className={classes.stepProse}>{step.prose}</p>}
-                                    {step.math.map((math, mIdx) => (
-                                        <div key={mIdx} className={classes.mathBlock}>
-                                            <BlockMath math={math} />
-                                        </div>
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    
-                    {/* Get Explanation Button */}
-                    <div className={classes.buttonGroup}>
-                        <button 
-                            className={classNames(commonStyles.primaryButton, styles.button)}
-                            onClick={handleGetExplanation}
-                            disabled={loading}
-                        >
-                            Get Step-by-Step Explanation
-                        </button>
-                    </div>
-                    
-                    {/* AI Explanation Display */}
-                    {explanation && (
-                        <div className={classes.explanation}>
-                            <div className={classes.solutionTitle}>Explanation</div>
-                            <div className={classes.explanationContent}>
-                                {explanation.split('\n').map((line, i) => (
-                                    <p key={i}>{line}</p>
-                                ))}
+                )}
+                
+                {/* Solution Display */}
+                {solution && !loading && (
+                    <div style={{
+                        background: '#e7f3ff',
+                        padding: '20px',
+                        borderRadius: '8px',
+                        margin: '20px 0',
+                        border: '2px solid #007bff'
+                    }}>
+                        <h3 style={{ marginTop: 0, color: '#007bff' }}>
+                            Solution at t = {targetTime}
+                        </h3>
+                        
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(2, 1fr)',
+                            gap: '10px',
+                            margin: '10px 0'
+                        }}>
+                            <div style={{
+                                background: 'white',
+                                padding: '10px',
+                                borderRadius: '4px',
+                                border: '1px solid #007bff'
+                            }}>
+                                <strong>x(t):</strong> {solution.final_values[0].toFixed(6)}
+                            </div>
+                            <div style={{
+                                background: 'white',
+                                padding: '10px',
+                                borderRadius: '4px',
+                                border: '1px solid #007bff'
+                            }}>
+                                <strong>y(t):</strong> {solution.final_values[1].toFixed(6)}
+                            </div>
+                            <div style={{
+                                background: 'white',
+                                padding: '10px',
+                                borderRadius: '4px',
+                                border: '1px solid #007bff'
+                            }}>
+                                <strong>z(t):</strong> {solution.final_values[2].toFixed(6)}
+                            </div>
+                            <div style={{
+                                background: 'white',
+                                padding: '10px',
+                                borderRadius: '4px',
+                                border: '1px solid #007bff'
+                            }}>
+                                <strong>w(t):</strong> {solution.final_values[3].toFixed(6)}
                             </div>
                         </div>
-                    )}
-                </div>
-            )}
+                        
+                        <div style={{
+                            background: '#fff3cd',
+                            padding: '15px',
+                            borderRadius: '8px',
+                            margin: '15px 0',
+                            border: '1px solid #ffc107'
+                        }}>
+                            <strong>Metrics:</strong><br/>
+                            Weighted Sum (S): {solution.stored_metrics.weighted_sum.toFixed(6)}<br/>
+                            Arc Length: {solution.stored_metrics.arc_length.toFixed(6)}<br/>
+                            Curvature: {solution.stored_metrics.curvature.toFixed(6)}<br/>
+                            Final Solution (Σ): {solution.stored_metrics.final_solution}
+                        </div>
+                        
+                        {/* LaTeX Solution Display */}
+                        {solution.latex_solution && (
+                            <div style={{
+                                background: '#f8f9fa',
+                                padding: '15px',
+                                borderRadius: '8px',
+                                margin: '15px 0'
+                            }}>
+                                <h3 style={{ marginTop: 0, color: '#333' }}>Step-by-Step Solution</h3>
+                                {parseLatexSolution(solution.latex_solution).map((step, idx) => (
+                                    <div key={idx} style={{ marginBottom: '15px' }}>
+                                        <div style={{
+                                            fontWeight: 'bold',
+                                            color: '#007bff',
+                                            marginBottom: '5px'
+                                        }}>
+                                            {step.title}
+                                        </div>
+                                        {step.prose && (
+                                            <p style={{ margin: '5px 0' }}>{step.prose}</p>
+                                        )}
+                                        {step.math.map((math, mIdx) => (
+                                            <div key={mIdx} style={{ margin: '10px 0' }}>
+                                                <div style={{
+                                                    background: 'white',
+                                                    padding: '10px',
+                                                    borderRadius: '4px',
+                                                    border: '1px solid #ddd',
+                                                    fontFamily: 'monospace'
+                                                }}>
+                                                    {math}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+                
+                {/* AI Explanation Display */}
+                {explanation && (
+                    <div style={{
+                        background: '#d4edda',
+                        padding: '20px',
+                        borderRadius: '8px',
+                        margin: '20px 0',
+                        border: '2px solid #28a745',
+                        whiteSpace: 'pre-wrap'
+                    }}>
+                        <h3 style={{ marginTop: 0, color: '#155724' }}>Explanation</h3>
+                        <div>{explanation}</div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-    const title = 'Website Starter';
-    const description = 'Welcome to the Website Starter';
-    const imageUrl = 'https://website-starter.com/og-image.png';
-
+    const title = 'AI Math Stumper - Simple Frontend';
+    const description = 'Simple React frontend for AI Math Stumper with working buttons';
+    
     return [
         { title },
-        {
-            name: 'description',
-            content: description,
-        },
-        {
-            tagName: 'link',
-            rel: 'canonical',
-            href: data?.canonicalUrl,
-        },
-        {
-            property: 'robots',
-            content: 'index, follow',
-        },
-        {
-            property: 'og:title',
-            content: title,
-        },
-        {
-            property: 'og:description',
-            content: description,
-        },
-        {
-            property: 'og:image',
-            content: imageUrl,
-        },
-        {
-            name: 'twitter:card',
-            content: 'summary_large_image',
-        },
-        {
-            name: 'twitter:title',
-            content: title,
-        },
-        {
-            name: 'twitter:description',
-            content: description,
-        },
-        {
-            name: 'twitter:image',
-            content: imageUrl,
-        },
+        { name: 'description', content: description },
+        { tagName: 'link', rel: 'canonical', href: data?.canonicalUrl },
+        { property: 'robots', content: 'index, follow' },
     ];
 };
 
-export const links: LinksFunction = () => {
+export const links = () => {
     return [
-        {
-            rel: 'icon',
-            href: '/favicon.ico',
-            type: 'image/ico',
-        },
+        { rel: 'icon', href: '/favicon.ico', type: 'image/ico' },
     ];
 };
